@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Story</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="article">
+        <header class="header">
+            <h1>Your Story Header</h1>
+        </header>
+
+        <div id="image-container" class="image_container">
+            <div id="image-slider">
+                <div class="article_image">
+                    <img src="images/article/plau_seeufer.jpg" alt="Image 1">
+                    <p class="image-description">Description for Image 1</p>
+                </div>
+                <div class="article_image">
+                    <img src="images/article/haus_eingang.jpg" alt="Image 2">
+                    <p class="image-description">Description for Image 2</p>
+                </div>
+                <div class="article_image">
+                    <img src="images/article/plau_hafen.jpg" alt="Image 3">
+                    <p class="image-description">Description for Image 3</p>
+                </div>
+            </div>
+            <div id="prev" onclick="prevImage()">&#10094;</div>
+            <div id="next" onclick="nextImage()">&#10095;</div>
+        </div>
+
+        <div id="body" class="body">
+            <p>First paragraph</p>
+            <p>Second paragraph</p>
+            <p>Third paragraph</p>
+        </div>
+    </div>
+
+    <script>
+        let currentImage = 0;
+        const images = document.querySelectorAll('.article_image');
+        const descriptions = document.querySelectorAll('.image-description');
+    
+        // Function to show the current image and update descriptions after transition
+        function showImage(index) {
+            images.forEach((image, i) => {
+                const transformValue = `translateX(-${index * 100}%)`;
+                image.style.transform = transformValue;
+            });
+        }
+    
+        // Function to update descriptions after the transition is complete
+        function updateDescriptions() {
+            descriptions.forEach((description, i) => {
+                description.style.transform = 'translateX(0)';
+            });
+        }
+    
+        // Event listener for transition end
+        images.forEach((image) => {
+            image.addEventListener('transitionend', updateDescriptions);
+        });
+    
+        // Function to handle previous image
+        function prevImage() {
+            currentImage = (currentImage - 1 + images.length) % images.length;
+            showImage(currentImage);
+        }
+    
+        // Function to handle next image
+        function nextImage() {
+            currentImage = (currentImage + 1) % images.length;
+            showImage(currentImage);
+        }
+    
+        // Initial call to set the container height
+        showImage(currentImage);
+    </script>
+    
+</body>
+</html>
